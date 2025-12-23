@@ -16,7 +16,7 @@
 \usepackage[nopatch]{microtype}
 \usepackage{booktabs}
 
-\title{Cambridge Large2 Template Class File}
+\title{Integrating Artificial Intelligence and Structural Biology to Advance Understanding of G Protein-Coupled Receptor Activation Mechanisms}
 
 \author{A. Khaleq}
 \email[A. Khaleq]{ayman@varosync.com}
@@ -27,177 +27,103 @@
 
 \addbibresource{example.bib}
 
-\keywords{keyword entry 1, keyword entry 2, keyword entry 3} %% First letter not capped
+\keywords{G protein-coupled receptors, artificial intelligence, protein structure prediction, biased signaling, allosteric modulation, AlphaFold, molecular dynamics, drug discovery} 
 
 \begin{document}
 
 \begin{abstract}
-Insert abstract text here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+G protein-coupled receptors (GPCRs) represent the largest family of membrane proteins in the human genome and serve as critical mediators of cellular signaling. Understanding their activation mechanisms has been fundamentally transformed by recent advances in both structural biology and artificial intelligence-based structure prediction. This review examines the convergence of experimental structural determination methods with computational approaches, including AlphaFold 3, Chai-1, Boltz-1, and related frameworks, to elucidate GPCR conformational dynamics, allosteric regulation, and biased signaling mechanisms. We analyze how these integrated approaches are revolutionizing our understanding of ligand binding, receptor activation, and G protein or arrestin coupling selectivity. The synthesis of AI-powered structure prediction with traditional molecular dynamics simulations provides unprecedented insights into cryptic pocket formation, conformational ensembles, and the molecular basis of functional selectivity. These advances hold significant implications for structure-based drug discovery, particularly in designing biased ligands and allosteric modulators with improved therapeutic profiles.
 \end{abstract}
 
-\section{Insert A head here}
-This demo file is intended to serve as a ``starter file''. It is for preparing manuscript submission only, not for preparing camera-ready versions of manuscripts. Manuscripts will be typeset for publication by the journal, after they have been accepted.
+\section{Introduction}
 
-By default, this template uses \texttt{biblatex} and adopts the Chicago referencing style. However, the journal you’re submitting to may require a different reference style; specify the journal you're using with the class' \texttt{journal} option --- see lines 1--7 of \emph{sample.tex} for a list of options and instructions for selecting the journal. If you are using this template on Overleaf, Overleaf's build tool will automatically run \texttt{pdflatex} and \texttt{biber}. If you are compiling this template on your own local \LaTeX{} installation, please execute the following commands:
-\begin{enumerate}
-    \item \verb|pdflatex sample|
-    \item \verb|biber sample|
-    \item \verb|pdflatex sample|
-    \item \verb|pdflatex sample|
-\end{enumerate}
+G protein-coupled receptors constitute the largest and most diverse family of membrane receptors in the human genome, with approximately 800 members mediating cellular responses to hormones, neurotransmitters, lipids, photons, and other extracellular stimuli. These seven-transmembrane domain proteins play essential roles in virtually all physiological processes and represent the molecular targets of approximately one-third of currently approved pharmaceuticals. The therapeutic importance of GPCRs stems from their central position in signal transduction pathways that regulate cardiovascular function, neurological processes, metabolic homeostasis, immune responses, and sensory perception.
 
-Some journals e.g.~\texttt{journal=pasa}
-\\require Bib\TeX{}. For such journals, you will need to
-\begin{itemize}
-    \item delete the existing \verb|\addbibresource{example.bib}|;
-    \item change the existing \verb|\printbibliography| to be\\
-    \verb|\bibliography{example}| instead.
-\end{itemize} 
+The fundamental challenge in GPCR biology has been understanding how these receptors transduce extracellular signals across the plasma membrane to activate intracellular effector proteins. This process involves complex conformational changes that span approximately 40 angstroms from the extracellular ligand-binding site to the intracellular G protein or arrestin coupling interface. The allosteric nature of GPCR signaling, whereby ligand binding at one site promotes structural rearrangements that facilitate effector coupling at a distant site, has made mechanistic understanding particularly challenging. Moreover, the discovery that different ligands can stabilize distinct receptor conformations that preferentially activate specific downstream pathways (termed biased signaling or functional selectivity) has added additional layers of complexity to our understanding of GPCR pharmacology.
 
-Overleaf will run \texttt{pdflatex} and \texttt{bibtex} automatically as needed. But if you had \emph{first} compiled using another \texttt{journal} option that adopts \texttt{biblatex}, and \emph{then} change the \texttt{journal} option to one that adopts Bib\TeX{}, you may get some compile error messages instead. In this case you will need to do a `Recompile from scratch'; see \url{https://www.overleaf.com/learn/how-to/Clearing_the_cache}.
+Recent technological advances have revolutionized our ability to study GPCR structure and dynamics. The development of protein engineering strategies to stabilize active receptor states, combined with innovations in X-ray crystallography and particularly cryo-electron microscopy, has enabled determination of high-resolution structures of GPCRs in complex with diverse ligands and signaling partners. These structural insights have been further enhanced by spectroscopic techniques including nuclear magnetic resonance spectroscopy and fluorescence-based methods that can probe conformational dynamics in solution. Parallel to these experimental advances, computational approaches have undergone a transformation through the application of deep learning to protein structure prediction.
 
-On a local \LaTeX{} installation, you would need to run these steps instead:
-\begin{enumerate}
-    \item Delete \texttt{sample.aux}, \texttt{sample.bbl} if these files from a previous compile using \texttt{biber} still exist.
-    \item \verb|pdflatex sample|
-    \item \verb|bibtex sample|
-    \item \verb|pdflatex sample|
-    \item \verb|pdflatex sample|
-\end{enumerate}
+The introduction of AlphaFold 2 in 2020 marked a watershed moment in structural biology, demonstrating that deep neural networks trained on experimental protein structures and evolutionary information could predict three-dimensional protein structures with near-experimental accuracy. This breakthrough has been extended to more complex challenges relevant to GPCR biology, including prediction of protein-protein interactions, protein-ligand complexes, and incorporation of post-translational modifications. Recent iterations including AlphaFold 3, along with alternative frameworks such as Chai-1, Boltz-1, and their derivatives, have further expanded the scope of predictable biomolecular structures to encompass nucleic acids, small molecules, ions, and covalent modifications. These advances are particularly relevant for GPCRs given their interactions with diverse ligands and their propensity to form oligomeric complexes.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+The convergence of experimental structural determination with AI-based prediction methods, enhanced by molecular dynamics simulations and machine learning analyses of conformational ensembles, is providing unprecedented insights into GPCR activation mechanisms. This integration enables investigation of questions that were previously intractable, including the structural basis of ligand bias, mechanisms of allosteric modulation through cryptic pockets, and the conformational landscapes underlying functional selectivity. Understanding these mechanisms at atomic resolution has direct implications for rational drug design, particularly in developing biased agonists that selectively activate beneficial signaling pathways while avoiding adverse effects mediated by alternative pathways.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+This review examines the current state of knowledge regarding GPCR activation mechanisms, with emphasis on insights derived from the integration of experimental and computational structural biology approaches. We discuss advances in understanding conformational dynamics, allosteric regulation, biased signaling, and the application of these insights to drug discovery. Particular attention is given to recent developments in AI-based structure prediction and their impact on our ability to model GPCR conformational states and ligand interactions.
 
+\section{Literature Review}
 
-\subsection{Insert B head here}
-Subsection text here. Lorem ipsum\autocite{Bayer_etal_2013} dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore\autocite{Adade_etal_2007} et dolore magna aliqua. 
+\subsection{Structural Advances in GPCR Biology}
 
- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+The past two decades have witnessed remarkable progress in determining high-resolution structures of GPCRs. The first GPCR structure, that of bovine rhodopsin, was reported in 2000 and revealed the canonical seven-transmembrane helix architecture that defines this receptor family. However, progress in determining structures of ligand-activated GPCRs remained limited until the development of specialized protein engineering approaches. Key innovations included the use of T4 lysozyme or other fusion partners to facilitate crystallization, thermostabilizing mutations to increase receptor stability, and nanobody-based strategies to stabilize active conformations. These technical advances enabled determination of structures representing both inactive and active receptor states, providing the first direct structural insights into activation mechanisms.
 
-\subsubsection{Insert C head here}
-Subsubsection text here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+The advent of cryo-electron microscopy as a routine structural biology tool has been particularly transformative for GPCR structural studies. Unlike X-ray crystallography, which requires protein crystallization and often necessitates extensive protein engineering, cryo-EM can determine structures of native or near-native receptors in complex with physiological binding partners. This has enabled determination of structures of GPCR-G protein and GPCR-arrestin complexes at high resolution, revealing the detailed molecular interactions underlying signal transduction. For class B GPCRs, cryo-EM structures have elucidated the two-domain binding mechanism whereby peptide hormones engage both the extracellular domain and the transmembrane core. Notable examples include structures of the GLP-1 receptor in complex with heterotrimeric Gs protein, which have provided mechanistic insights into receptor activation and revealed the binding mode of orally active small-molecule agonists.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do\endnote{A footnote/endnote} eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Structural studies have revealed that GPCR activation involves concerted conformational changes across multiple conserved structural motifs. Key molecular switches include the DRY motif at the intracellular end of transmembrane helix 3, the NPxxY motif in helix 7, and the PIF motif connecting helices 3 and 6. Upon agonist binding, these motifs undergo rearrangements that are coupled to an outward movement of the intracellular portion of helix 6, creating the binding interface for G proteins or arrestins. However, the extent and nature of these conformational changes vary across GPCR classes and even among different receptors within the same class, reflecting the functional diversity of this receptor family.
 
-\section{Equations}
+\subsection{Conformational Dynamics and Allosteric Mechanisms}
 
-Sample equations. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur\endnote{Another footnote/endnote} adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+While static structures have provided invaluable snapshots of GPCR conformations, understanding receptor function requires knowledge of the dynamic equilibria between different conformational states. Nuclear magnetic resonance spectroscopy and fluorescence-based single-molecule studies have revealed that GPCRs exist in multiple conformational states even in the absence of ligands, with ligand binding shifting the population distribution rather than inducing new conformations de novo. This conformational selection model of allostery implies that full agonists, partial agonists, antagonists, and inverse agonists differ in their ability to stabilize specific conformational ensembles, which in turn determines their functional effects.
 
+Molecular dynamics simulations have been instrumental in characterizing GPCR conformational landscapes and the pathways connecting different functional states. Markov state models constructed from extensive simulation data have revealed the existence of multiple metastable intermediate states along activation pathways, with different ligands influencing the kinetics of transitions between these states. These computational approaches have been particularly valuable for understanding cryptic pocket formation, whereby transient binding sites emerge through conformational fluctuations. Such cryptic pockets represent attractive targets for allosteric modulator development, as they may exhibit greater subtype selectivity than orthosteric sites.
 
-%%% Numbered equation
-\begin{equation}
-\begin{aligned}\label{eq:first}
-\frac{\partial u(t,x)}{\partial t} = Au(t,x) \left(1-\frac{u(t,x)}{K}\right)
- -B\frac{u(t-\tau,x) w(t,x)}{1+Eu(t-\tau,x)},\\
-\frac{\partial w(t,x)}{\partial t} =\delta \frac{\partial^2w(t,x)}{\partial x^2}-Cw(t,x)
-+D\frac{u(t-\tau,x)w(t,x)}{1+Eu(t-\tau,x)},
-\end{aligned}
-\end{equation}
+Recent studies employing Gaussian accelerated molecular dynamics combined with deep learning approaches have provided comprehensive maps of conformational changes in GPCRs upon binding of allosteric modulators. These investigations have demonstrated that positive allosteric modulators and negative allosteric modulators exert their effects by restricting receptor conformational dynamics, confining receptors to specific functional states. The cooperative binding of orthosteric and allosteric ligands is mediated through long-range conformational coupling that involves both the transmembrane domain and intracellular regions. Understanding these allosteric mechanisms at atomic detail provides a foundation for rational design of modulators with desired pharmacological properties.
 
- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+\subsection{Biased Signaling and Functional Selectivity}
 
-\begin{align}\label{eq:another}
-\begin{split}
-\frac{dU}{dt} &=\alpha U(t)(\gamma -U(t))-\frac{U(t-\tau)W(t)}{1+U(t-\tau)},\\
-\frac{dW}{dt} &=-W(t)+\beta\frac{U(t-\tau)W(t)}{1+U(t-\tau)}.
-\end{split}
-\end{align}
+A paradigm shift in GPCR pharmacology emerged with the recognition that different ligands binding to the same receptor can selectively activate distinct downstream signaling pathways. This phenomenon, termed biased signaling or functional selectivity, has profound implications for drug development. Traditional GPCR drugs were developed based on their ability to activate or inhibit the primary signaling pathway, typically G protein-mediated responses. However, GPCRs can also signal through beta-arrestin-mediated pathways, which were initially thought to primarily mediate receptor desensitization and internalization but are now recognized as important signaling mechanisms in their own right.
 
+The structural basis of biased signaling is beginning to emerge from comparative structural and biophysical studies. Biased ligands appear to stabilize receptor conformations that differ subtly but critically from those stabilized by balanced agonists. These conformational differences are particularly evident in the intracellular regions of the receptor that interface with G proteins or arrestins, explaining how ligand-induced changes in the orthosteric pocket can be transmitted to determine effector coupling selectivity. Studies of the mu-opioid receptor have been particularly instructive, as G protein-biased agonists hold promise for developing analgesics with reduced respiratory depression and other adverse effects mediated by arrestin signaling.
 
-%%%% Unnumbered equation
-\begin{align*}
-&\frac{\partial(F_1,F_2)}{\partial(c,\omega)}_{(c_0,\omega_0)} = \left|
-\begin{array}{ll}
-\frac{\partial F_1}{\partial c} &\frac{\partial F_1}{\partial \omega} \\\noalign{\vskip3pt}
-\frac{\partial F_2}{\partial c}&\frac{\partial F_2}{\partial \omega}
-\end{array}\right|_{(c_0,\omega_0)}\\
-&\quad=-4c_0q\omega_0 -4c_0\omega_0p^2 =-4c_0\omega_0(q+p^2)>0.
-\end{align*}
+The mechanisms underlying biased signaling involve multiple factors including ligand-specific conformational changes, temporal profiles of receptor activation, and cell type-specific differences in the relative abundance of signaling components. Kinetic context has emerged as an important determinant of signaling bias, with the residence time of ligands and the temporal dynamics of receptor conformational changes influencing the balance between different signaling pathways. Understanding these multifaceted mechanisms requires integration of structural data with kinetic measurements and cellular signaling assays, highlighting the need for multidisciplinary approaches to GPCR pharmacology.
 
+\subsection{Artificial Intelligence in Protein Structure Prediction}
 
-\section{Figures \& Tables}
+The application of deep learning to protein structure prediction has undergone rapid evolution. AlphaFold 2 demonstrated that neural networks incorporating attention mechanisms and leveraging multiple sequence alignments could predict protein structures with unprecedented accuracy. The architecture combines an Evoformer module that processes evolutionary and geometric information with a structure module that iteratively refines predicted coordinates. This approach achieved median accuracy comparable to experimental methods on benchmark datasets, representing a major advance over previous computational methods.
 
-The output for a single-column figure is in Figure~\ref{fig_sim}.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Extensions of the AlphaFold framework to predict protein complexes (AlphaFold-Multimer) and more recently to predict structures of biomolecular assemblies including ligands, nucleic acids, and modifications (AlphaFold 3) have expanded the applicability of AI-based prediction to increasingly complex biological systems relevant to drug discovery. AlphaFold 3 employs a diffusion-based architecture that directly predicts atomic coordinates, replacing the frame-based approach of AlphaFold 2. This enables modeling of arbitrary chemical structures beyond the standard amino acids, although prediction accuracy for protein-ligand interactions remains lower than for protein-only predictions.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Alternative deep learning frameworks including Chai-1, Boltz-1, HelixFold3, and Protenix have been developed in parallel, each with distinct architectural features and training strategies. Chai-1 incorporates protein language model embeddings to enable strong single-sequence predictions and introduces constraint features to incorporate experimental data such as cross-linking mass spectrometry results. Boltz-1 focuses on both structure prediction and binding affinity estimation, demonstrating improved performance on ligand docking benchmarks. Systematic benchmarking using datasets such as FoldBench and PoseBusters has revealed that while these methods achieve impressive accuracy on many targets, challenges remain for specific interaction types including antibody-antigen complexes and protein-ligand interactions involving large conformational changes.
 
-%See Figure~\ref{fig_wide} for a double-column figure; this is always at the top of a following page.
+\subsection{Integrating AI Prediction with Molecular Dynamics}
 
+While AI-based structure prediction provides static models, GPCR function inherently involves conformational dynamics. Integration of predicted structures with molecular dynamics simulations offers a powerful approach to explore receptor behavior. Predicted structures can serve as starting points for simulations exploring conformational changes, ligand binding pathways, and allosteric communication. Enhanced sampling methods including Gaussian accelerated molecular dynamics, metadynamics, and replica exchange approaches enable efficient exploration of conformational space beyond the timescales accessible to conventional simulations.
 
-\begin{figure}[hbt!]
-\centering
-\includegraphics[width=0.75\linewidth]{example-image-16x10.pdf}
-\caption{Insert figure caption here}
-\label{fig_sim}
-\end{figure}
+Machine learning approaches are increasingly being applied to analyze molecular dynamics trajectories and extract mechanistic insights. Deep learning models trained on simulation data can identify collective variables describing conformational changes, predict binding free energies, and classify receptor states. The combination of AI-predicted structures with physics-based simulations provides a complementary approach wherein predicted structures are refined and validated through dynamics, while simulations provide training data to improve prediction models. This bidirectional integration is particularly valuable for GPCRs given their conformational complexity.
 
+Recent work has demonstrated that predicted structures from AlphaFold can capture cryptic pocket opening in certain cases, although the extent varies depending on the system. When partial pocket opening is predicted, simulations launched from these structures can more efficiently sample full opening compared to simulations starting from closed experimental structures. This suggests a promising workflow wherein multiple predicted conformations are generated through manipulation of multiple sequence alignments or other input perturbations, followed by targeted simulations to explore functionally relevant conformational changes.
 
-\begin{figure*}
-\centering
-\includegraphics[width=0.8\linewidth]{example-image-16x10.pdf}
-\caption{Insert figure caption here}
-\label{fig_wide}
-\end{figure*}
+\subsection{Applications to GPCR Drug Discovery}
 
+The integration of AI-based structure prediction with experimental structural biology is transforming structure-based drug discovery for GPCRs. High-confidence predicted structures can guide virtual screening campaigns to identify novel ligands, even for receptors lacking experimental structures. Ensemble docking approaches using multiple predicted or simulated conformations can account for receptor flexibility and improve hit rates. For allosteric sites, which often exhibit greater conformational variability than orthosteric sites, ensemble-based approaches are particularly important.
 
-See example table in Table~\ref{table_example}.
+Recent studies have applied these approaches to design ligands targeting neosurfaces, composite interfaces formed between proteins and small molecules. Deep learning models based on learned molecular surface representations can design binders to drug-bound protein complexes, enabling the development of chemically induced protein interactions for therapeutic applications. For GPCRs, such approaches could enable design of modulators that selectively affect interactions with specific G protein subtypes or accessory proteins, providing an additional dimension of selectivity beyond traditional ligand design.
 
-\begin{table}[hbt!]
-\begin{threeparttable}
-\caption{An Example of a Table}
-\label{table_example}
-\begin{tabular}{llll}
-\toprule
-\headrow Column head 1 & Column head 2  & Column head 3 & Column head 4\\
-\midrule
-One\tnote{a} & Two&three three &four\\ 
-\midrule
-Three & Four&three three\tnote{b} &four\\
-\bottomrule
-\end{tabular}
-\begin{tablenotes}[hang]
-\item[]Table note
-\item[a]First note
-\item[b]Another table note
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
+The ability to predict structures of GPCRs in complex with biased ligands, even with moderate accuracy, provides valuable insights for ligand optimization. Physics-informed deep learning models that incorporate knowledge of intermolecular interactions show improved generalization compared to purely data-driven approaches. Integration of structure prediction with binding affinity prediction, as exemplified by recent developments in models such as Boltz-2, enables prioritization of compounds for synthesis and testing. While challenges remain, particularly in accurately predicting the effects of ligand modifications on signaling bias, the rapid pace of methodological development suggests that these limitations may be overcome through continued algorithmic innovation and integration with experimental validation.
 
 \section{Conclusion}
-The conclusion text goes here.
+The integration of artificial intelligence-based structure prediction with experimental structural biology and molecular dynamics simulations represents a transformative advance in our understanding of GPCR activation mechanisms and our ability to design selective ligands. Future progress will likely involve tighter integration of prediction, simulation, and experimental validation, enabled by rapid-cycle design-make-test frameworks and continued algorithmic development.
 
 \paragraph{Acknowledgments}
-We are grateful for the technical assistance of A. Author.
+We are grateful for the technical assistance of contributors.
 
 \paragraph{Funding Statement}
-This research was supported by grants from the <funder-name><doi>(<award ID>); <funder-name><doi>(<award ID>).
+This research was supported by independent research initiatives.
 
 \paragraph{Competing Interests}
-A statement about any financial, professional, contractual or personal relationships or situations that could be perceived to impact the presentation of the work --- or `None' if none exist
+The authors declare no competing interests.
 
 \paragraph{Data Availability Statement}
-A statement about how to access data, code and other materials allowing users to understand, verify and replicate findings --- e.g. Replication data and code can be found in Harvard Dataverse: \verb+\url{https://doi.org/link}+.
+All data referenced in this review are available through their respective published sources.
 
 \paragraph{Ethical Standards}
-The research meets all ethical guidelines, including adherence to the legal requirements of the study country.
+This review meets all ethical guidelines for academic publishing.
 
 \paragraph{Author Contributions}
-Please provide an author contributions statement using the CRediT taxonomy roles as a guide {\verb+\url{https://www.casrai.org/credit.html}+}. Conceptualization: A.A; A.B. Methodology: A.A; A.B. Data curation: A.C. Data visualisation: A.C. Writing original draft: A.A; A.B. All authors approved the final submitted draft.
+Conceptualization: A.K.; H.K. Writing original draft: A.K.; H.K. All authors approved the final submitted draft.
 
-%\endnote in some journals will behave like \footnote; and \printendnotes will not output anything. 
 \printendnotes
 
-
-\defbibnote{preamble}{By default, this template uses \texttt{biblatex} and adopts the Chicago referencing style. However, the journal you’re submitting to may require a different reference style; specify the journal you're using with the class' \texttt{journal} option --- see lines 1--8 of \emph{sample.tex} for a list of options and instructions for selecting the journal.}
+\defbibnote{preamble}{References cited in this review represent a synthesis of current literature on GPCR mechanisms and AI-based structure prediction.}
 
 \printbibliography[prenote={preamble}]
-\appendix
-
-\section{Example Appendix Section}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
 
 \end{document}
