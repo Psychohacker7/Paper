@@ -557,7 +557,7 @@
 }
 \pagestyle{plain}
 \newcommand*\cup@copyright@notice{\scriptsize%
-  \textcopyright\ Cambridge University Press \cup@year. 
+  \textcopyright\ \cup@year. 
   This is an Open Access article, distributed under the terms of the 
   Creative Commons Attribution licence (\url{http://creativecommons.org/licenses/by/4.0/}), 
   which permits unrestricted re-use, distribution, and reproduction in any medium, 
