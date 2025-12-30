@@ -95,7 +95,7 @@
     % === INJECTED FEATURES ===
     \pic[shift={(5.5, 5, 0)}] at (0,0,0) 
         {Box={name=rbf, fill=injectCol, opacity=0.7, height=8, width=1.5, depth=8, zlabel=96}};
-    \node[font=\scriptsize\bfseries] at ($(rbf-caption) + (0, 0.9, 0)$) {RBF};
+    \node[font=\scriptsize\bfseries] at ($(rbf-caption) + (0.2, 1.05, 0)$) {RBF};
     
     \pic[shift={(11, 5, 0)}] at (0,0,0) 
         {Box={name=motif, fill=injectCol, opacity=0.7, height=6, width=1.5, depth=6, zlabel=5}};
@@ -108,7 +108,7 @@
     
     \pic[shift={(7.5, -1, 0)}] at (0,0,0) 
         {Box={name=edgeupd, fill=edgeCol, opacity=0.7, height=14, width=2.5, depth=14, zlabel=320}};
-    \node[font=\scriptsize\bfseries] at ($(edgeupd-caption) + (0, 1, 0)$) {Edge Update};
+    \node[font=\scriptsize\bfseries] at ($(edgeupd-caption) + (0.15, 1, 0)$) {Edge Update};
     
     \pic[shift={(11.5, -1, 0)}] at (0,0,0) 
         {Box={name=msg, fill=msgCol, opacity=0.7, height=14, width=2.5, depth=14, zlabel=320}};
@@ -120,7 +120,7 @@
     
     \pic[shift={(19, 0.5, 0)}] at (0,0,0) 
         {Box={name=nodeupd, fill=nodeCol, opacity=0.7, height=16, width=2.5, depth=16, zlabel=320}};
-    \node[font=\scriptsize\bfseries] at ($(nodeupd-caption) + (0, 1.1, 0)$) {Node Update};
+    \node[font=\scriptsize\bfseries] at ($(nodeupd-caption) + (0.2, 1.1, 0)$) {Node Update};
     
     \pic[shift={(19, -4.5, 0)}] at (0,0,0) 
         {Box={name=coord, fill=coordCol, opacity=0.7, height=8, width=2, depth=8, zlabel=3}};
@@ -187,7 +187,7 @@
     
     % ==== LEGEND ====
     \node[font=\sffamily\scriptsize, text=gray, anchor=west] at (0, -8.5) {
-        \textbf{---} main flow \quad \textbf{$\cdots$} residual \quad \textbf{- -} feature injection
+        \textbf{---} main flow \quad \textbf{$\cdots$} residual \quad \textcolor{orange!70}{\textbf{- -} }\textcolor{orange!70}{feature injection}
     };
 
 \end{tikzpicture}
