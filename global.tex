@@ -111,7 +111,7 @@
     
     % Model box
     \begin{scope}[on background layer]
-        \node[stage=modelCol, fit=(nodeproj)(edgeproj)(egnn)(jk)(globalst)(concat), label={[stagelabel=modelCol]above:HYALINE V2-D MODEL}] (modelbox) {};
+        \node[stage=modelCol, fit=(nodeproj)(edgeproj)(egnn)(jk)(globalst)(concat), label={[stagelabel=modelCol]above:STRUCTURAL GRAPH ENCODER}] (modelbox) {};
     \end{scope}
     
     % ==== HEAD & OUTPUT STAGE ====
@@ -125,34 +125,34 @@
     
     % Input -> Preprocessing
     \draw[arrow] (pdb) -- (coords);
-    \draw[arrow] (pdb) |- (seq);
+    \draw[arrow] (pdb.east) -- ++(0.6,0) |- (seq.west);
     
     % Preprocessing internal
     \draw[arrow] (seq) -- (motifdet);
     
     % Preprocessing -> Features
-    \draw[arrow] (coords) -- (graph);
+    \draw[arrow] (coords.south) -- ++(0,-0.25) -- ++(1.9,0) |- (graph.west);
     \draw[arrow] (coords.east) -- ++(0.3,0) |- (rbf.west);
-    \draw[arrow] (seq) -- (esm3);
+    \draw[arrow] (seq.east) -- ++(0.6,0) |- (esm3.west);
     \draw[arrow] (motifdet.east) -- ++(0.8,0) |- (motifemb.west);
     
     % Features internal
-    \draw[arrow] (esm3) -- (emb);
-    \draw[arrow] (graph) -- (edge);
+    \draw[-, line width=1.2pt, draw=gray!70] (esm3) -- (emb);
+    \draw[-, line width=1.2pt, draw=gray!70] (graph) -- (edge);
     
     % Features -> Model
-    \draw[arrow] (emb) -- (nodeproj);
-    \draw[arrow] (edge.east) -- ++(0.5,0) |- (edgeproj.west);
+    \draw[arrow] (emb.east) -- ++(0.6,0) |- (nodeproj.west);
+    \draw[arrow] (edge.east) -- ++(0.7,0) |- (edgeproj.west);
     
     % Model internal
-    \draw[arrow] (nodeproj) -- (egnn.north west);
+    \draw[arrow] (nodeproj.east) -- ++(0.2,0) -| ($(egnn.north west)!0.9!(egnn.north east)$);
     \draw[arrow] (edgeproj) -- (egnn.north);
     \draw[dashedarrow] (rbf.east) -- ++(1.2,0) |- (egnn.west);
-    \draw[dashedarrow] (motifemb.east) -- ++(0.8,0) |- (egnn.south west);
+    \draw[dashedarrow] (motifemb.east) -- ++(1.2,0) |- (egnn.south west);
     
     \draw[arrow] (egnn) -- (jk);
-    \draw[arrow] (egnn.south east) -- ++(0,-.3) -| (globalst.north);
-    \draw[arrow] (jk) -- (concat);
+    \draw[arrow] ($(egnn.south east)!0.1!(egnn.south west)$) -- ++(0,-0.3) -- ++(0.8,0) -| (globalst.north);
+    \draw[arrow] (jk.south) -- ($(concat.north west)!0.189!(concat.north east)$);
     \draw[arrow] (globalst) |- (concat);
     
     % Model -> Head -> Output
