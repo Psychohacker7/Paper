@@ -185,14 +185,14 @@ t-SNE projection (perplexity = 30, 1,000 iterations) of the final hidden layer e
 %=======================================================================
 % Uncomment below if you want to include in Methods:
 %
-% \begin{figure}[!htbp]
-% \centering
-% \includegraphics[width=0.95\textwidth]{Geometric_Arbfeat_Bmotifattbias.png}
-% \caption{\textbf{Graph construction and feature encoding.} 
-% \textbf{a}, Radial basis function (RBF) encoding of pairwise C$_\alpha$ distances. Each edge receives a 96-dimensional feature vector computed as Gaussian expansions centered at uniformly spaced distances from 2--20~\AA{}. This smooth, continuous representation enables the model to learn distance-dependent interaction patterns characteristic of activation states.
-% \textbf{b}, Motif attention biasing mechanism. Residues within conserved activation microswitches (DRY, NPxxY, CWxP) receive additive attention bias ($b_{\text{motif}} = 0.5$), providing a soft inductive prior that guides learning toward functionally important regions without constraining the model's representational capacity.}
-% \label{fig:methods_graph}
-% \end{figure}
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{Geometric_Arbfeat_Bmotifattbias.png}
+\caption{\textbf{Graph construction and feature encoding.} 
+\textbf{a}, Radial basis function (RBF) encoding of pairwise C$_\alpha$ distances. Each edge receives a 96-dimensional feature vector computed as Gaussian expansions centered at uniformly spaced distances from 2--20~\AA{}. This smooth, continuous representation enables the model to learn distance-dependent interaction patterns characteristic of activation states.
+\textbf{b}, Motif attention biasing mechanism. Residues within conserved activation microswitches (DRY, NPxxY, CWxP) receive additive attention bias ($b_{\text{motif}} = 0.5$), providing a soft inductive prior that guides learning toward functionally important regions without constraining the model's representational capacity.}
+\label{fig:methods_graph}
+\end{figure}
 
 
 %=======================================================================
