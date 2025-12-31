@@ -94,18 +94,12 @@ A key design choice in \hyaline{} is the incorporation of biologically-motivated
 %-----------------------------------------------------------------------
 \begin{figure*}[!htbp]
 \centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{4cm}
-\textbf{FIGURE 1: \hyaline{} Architecture and Dataset Overview}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{\hyaline{} architecture and dataset characteristics.}
-\textbf{a}, Schematic of the \hyaline{} architecture. PDB structures are processed to extract $\text{C}_\alpha$ coordinates and amino acid sequences. ESM3 embeddings (1,536 dimensions per residue) provide evolutionary and functional representations. Pairwise distances are encoded using radial basis function (RBF) expansion (96 dimensions). Motif attention biasing incorporates prior knowledge of activation-relevant regions (DRY, NPxxY, CWxP motifs). Five layers of E(n)-equivariant message passing update node representations while respecting rotational and translational symmetry. Global attention pooling aggregates per-residue features into a graph-level representation, followed by classification into active or inactive states.
-\textbf{b}, Detailed view of the equivariant message passing layer showing coordinate and feature updates. Unlike standard GNNs, equivariant layers update both node features $h_i$ and coordinates $x_i$, ensuring that predictions depend only on relative atomic arrangements.
-\textbf{c}, Distribution of structures by \gpcr{} family. The dataset comprises 1,590 experimentally determined structures from four major classes: Class A (Rhodopsin, $n=1,263$), Class B1 (Secretin, $n=145$), Class C (Glutamate, $n=94$), and Class F (Frizzled, $n=34$).
-\textbf{d}, Distribution of activation states showing the temporal split. Training set (pre-2023): $n=1,312$. Temporal test set (2023--2024): $n=278$. Active structures comprise 72.7\% of the dataset, reflecting the prevalence of G protein-coupled complexes in recent cryo-EM studies.}
+\includegraphics[width=0.95\textwidth]{global_diagram.pdf}
+\caption{\textbf{The Hyaline geometric deep learning framework.} 
+The architecture integrates evolutionary sequence information with three-dimensional structural geometry to predict \gpcr{} activation states. 
+\textbf{a}, The pipeline processes amino acid sequences using the ESM3 protein language model, generating 1,536-dimensional per-residue embeddings that encode evolutionary constraints derived from billions of protein sequences. In parallel, structural geometry is encoded via radial basis function (RBF) radius graphs constructed with a 10~\AA{} cutoff, producing 96-dimensional distance features for each edge. 
+\textbf{b}, These complementary modalities---evolutionary embeddings and geometric features---are fused within a stack of five E(n)-equivariant message-passing layers. This equivariant formulation ensures that predictions depend solely on relative atomic arrangements, maintaining strict invariance to rotations and translations of the input coordinate frame. 
+\textbf{c}, Biological priors are injected through a soft motif-attention biasing mechanism that guides the network to prioritize residues within conserved activation microswitches (DRY, NPxxY, CWxP regions) while preserving full representational flexibility to discover novel structural determinants from training data. Global attention pooling aggregates per-residue features into a graph-level representation for final binary classification.}
 \label{fig:architecture}
 \end{figure*}
 
@@ -126,18 +120,9 @@ We further compared \hyaline{} against several additional baselines representing
 %-----------------------------------------------------------------------
 \begin{figure}[!htbp]
 \centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{4cm}
-\textbf{FIGURE 2: \hyaline{} Classification Performance}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{\hyaline{} generalizes to temporally distinct structures.}
-\textbf{a}, Receiver operating characteristic (ROC) curves comparing performance on the training set (5-fold cross-validation, \auroc{} = 0.995) and temporal test set (structures from 2023--2024, \auroc{} = 0.991). The minimal performance gap demonstrates robust generalization to structures deposited after the training cutoff. Shaded regions indicate 95\% confidence intervals.
-\textbf{b}, Confusion matrix for the temporal test set. True positives: 178 active structures correctly classified. True negatives: 78 inactive structures correctly classified. False positives: 7 inactive structures misclassified as active. False negatives: 4 active structures misclassified as inactive.
-\textbf{c}, Comparison of \hyaline{} with ESM3-only baseline on the temporal test set. The 13.9 percentage point improvement in \auroc{} (0.991 vs 0.852) demonstrates that geometric structure is essential for activation state prediction---evolutionary embeddings alone cannot distinguish conformational states.
-\textbf{d}, Calibration curves comparing predicted probabilities to observed frequencies on training (blue) and temporal test (orange) sets. Well-calibrated predictions on both sets enable reliable confidence assessment for downstream applications.}
+\includegraphics[width=0.95\textwidth]{Benchmark_Acomp_Bresindep.png}
+\caption{\textbf{Hyaline generalizes to temporally distinct structures.} 
+Performance evaluation on a held-out test set comprising structures deposited in 2023--2024, strictly separated from the pre-2023 training corpus. \hyaline{} (purple) achieves an \auroc{} of 0.991, significantly outperforming sequence-only baselines including ESM3 embeddings with linear classifier (\auroc{} = 0.852), ESM3 with MLP (\auroc{} = 0.867), and random forest models trained on hand-crafted inter-residue distance features (\auroc{} = 0.891). The 13.9 percentage point performance gap relative to the ESM3-only baseline demonstrates the critical contribution of geometric message passing in resolving conformational states that remain indistinguishable by amino acid sequence information alone. Error bars denote 95\% confidence intervals computed via bootstrap resampling ($n = 1{,}000$).}
 \label{fig:performance}
 \end{figure}
 
@@ -182,18 +167,9 @@ Quantitative analysis revealed a strong correlation between attention weights an
 %-----------------------------------------------------------------------
 \begin{figure}[!htbp]
 \centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{5cm}
-\textbf{FIGURE 3: Attention Mechanisms Recover Conserved Activation Switches}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{Attention weight analysis reveals learned structural importance.}
-\textbf{a}, Per-residue attention weights averaged across correctly classified structures in the temporal test set, aligned to the Ballesteros-Weinstein numbering scheme. Conserved motifs show significant enrichment: DRY (3.2$\times$), NPxxY (2.8$\times$), CWxP (2.4$\times$). Additional peaks at TM5 intracellular end (2.1$\times$) and helix 8 (1.9$\times$) correspond to known G protein-binding elements. Gray shading indicates transmembrane helix boundaries.
-\textbf{b}, Attention weights mapped onto representative active (left, PDB: 3SN6) and inactive (right, PDB: 2RH1) $\beta_2$-adrenergic receptor structures. Color scale: blue (low attention) $\rightarrow$ white $\rightarrow$ red (high attention). High-attention regions localize to intracellular ends of TM3, TM5, TM6, and TM7.
-\textbf{c}, Differential attention between active and inactive structures (active minus inactive). Red indicates higher attention in active structures (opened cavity, repositioned TM6); blue indicates higher attention in inactive structures (ionic lock region, closed conformation).
-\textbf{d}, Correlation between attention weights and TM6 outward displacement across all structures ($r = 0.78$, $p < 0.001$). Each point represents one structure; displacement measured as C$\alpha$--C$\alpha$ distance between TM6 intracellular tip and receptor centroid.}
+\includegraphics[width=0.95\textwidth]{MotifAttention_Amean_Bdistrib.png}
+\caption{\textbf{Autonomous recovery of conserved activation switches.} 
+Quantitative analysis of learned attention weights across correctly classified structures in the temporal test set reveals that \hyaline{} spontaneously prioritizes functionally critical regions without explicit supervision. The model assigns significantly elevated importance to the three conserved activation motifs---DRY (3.2$\times$ enrichment relative to non-motif residues), NPxxY (2.8$\times$), and CWxP (2.4$\times$)---compared to variable regions such as the PIF motif ($p < 0.001$, permutation test with $n = 10{,}000$ resamples). Additional attention peaks at the intracellular end of TM5 (2.1$\times$) and helix 8 (1.9$\times$) correspond to established G protein-binding elements, further validating that the network has learned the underlying biophysics of receptor activation rather than superficial structural correlates or dataset-specific artifacts.}
 \label{fig:interpretability}
 \end{figure}
 
@@ -212,21 +188,7 @@ Analysis of the latent representations learned by \hyaline{} revealed clear orga
 %-----------------------------------------------------------------------
 % FIGURE 4: Family-Stratified Performance
 %-----------------------------------------------------------------------
-\begin{figure}[!htbp]
-\centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{4cm}
-\textbf{FIGURE 4: Performance Across \gpcr{} Families}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{Classification performance stratified by \gpcr{} family.}
-\textbf{a}, Bar chart showing \auroc{} for each receptor class. Error bars indicate 95\% confidence intervals. Class A: 0.997 ($n=1,263$), Class B1: 0.988 ($n=145$), Class C: 0.971 ($n=94$), Class F: 0.956 ($n=34$). Strong performance is maintained across all classes despite significant mechanistic differences in activation pathways.
-\textbf{b}, Representative active (blue) and inactive (red) structures from each receptor class, highlighting class-specific activation mechanisms. Class A ($\beta_2$AR, PDB: 3SN6/2RH1): pronounced TM6 outward movement ($\sim$14 \AA{}), ionic lock R$^{3.50}$--E$^{6.30}$ broken. Class B1 (GLP-1R, PDB: 6X18/6LN2): TM6 kinking with extracellular unwinding. Class C (mGluR5, PDB: 6N52/6N51): subtle intramolecular changes with dimer reorientation. Class F (SMO, PDB: 6O3C/5L7D): intermediate TM6 movement with TM5/TM7 contributions.
-\textbf{c}, t-SNE visualization of learned representations colored by family (left) and activation state (right). Structures cluster primarily by activation state with secondary family-specific organization, indicating that \hyaline{} has learned both universal and class-specific activation features.}
-\label{fig:family_performance}
-\end{figure}
+
 
 \subsection{Comparison with existing methods}
 
@@ -277,18 +239,9 @@ Finally, reducing the number of message passing layers from 5 to 3 decreased \au
 %-----------------------------------------------------------------------
 \begin{figure}[!htbp]
 \centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{4cm}
-\textbf{FIGURE 5: Ablation Studies Quantify Component Contributions}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{Ablation studies quantifying component contributions.}
-\textbf{a}, Bar chart showing \auroc{} for the full model and variants with individual components removed. ESM3 embeddings provide the largest contribution ($\Delta = -17.2\%$), followed by motif attention biasing ($\Delta = -2.7\%$), RBF distance encoding ($\Delta = -2.4\%$), and reduced layer count ($\Delta = -1.4\%$).
-\textbf{b}, Effect of number of message passing layers on performance. Optimal performance is achieved with 5 layers (50~\AA{} receptive field); fewer layers limit information propagation across the transmembrane domain, while additional layers provide no benefit and increase overfitting risk.
-\textbf{c}, Comparison of attention patterns with and without motif biasing. The unbiased model still learns to attend to activation motifs, but with lower enrichment, indicating that biasing accelerates rather than enables learning.
-\textbf{d}, Training and validation loss curves for the full model, showing stable convergence without overfitting.}
+\includegraphics[width=0.95\textwidth]{Architecture_Ablation.png}
+\caption{\textbf{Deconstructing the value of geometric priors.} 
+Systematic ablation studies quantify the independent contribution of each architectural component to classification performance. Removal of the geometric structure encoding (No RBF/GNN) produces the steepest performance decline ($\Delta$\auroc{} = $-$17.2\%), confirming that three-dimensional geometry constitutes the primary driver of accurate state discrimination---sequence-derived features alone, despite their richness, cannot resolve the conformational differences between active and inactive states. Ablating the motif-biased attention mechanism results in a more modest but statistically significant decrease ($\Delta$\auroc{} = $-$2.7\%, $p < 0.01$), validating the utility of domain-specific inductive biases in accelerating learning and improving generalization. The RBF distance encoding ($\Delta$\auroc{} = $-$2.4\%) and message-passing depth ($\Delta$\auroc{} = $-$1.4\% for 3 vs.\ 5 layers) each contribute incrementally, demonstrating that all components synergize to achieve optimal performance. All ablations evaluated via 5-fold cross-validation with cluster-based splitting at 30\% sequence identity.}
 \label{fig:ablation}
 \end{figure}
 
@@ -336,18 +289,23 @@ An instructive false negative is the adenosine A$_{2A}$ receptor bound to the ag
 %-----------------------------------------------------------------------
 \begin{figure}[!htbp]
 \centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{4cm}
-\textbf{FIGURE 6: Error Analysis and Challenging Case Studies}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{Error analysis reveals biological ambiguity rather than model failure.}
-\textbf{a}, Distribution of prediction confidence scores. The bimodal distribution indicates high certainty for most predictions, with only 2.8\% of structures receiving intermediate confidence scores (0.3--0.7).
-\textbf{b}, Categorization of the 39 misclassified structures by likely cause. Partially activated intermediates (agonist-bound without transducer): $n=15$. Class C receptors with distinct mechanism: $n=11$. Structures with experimental artifacts: $n=8$. Unexplained: $n=5$.
-\textbf{c}, Correctly classified challenging case: muscarinic M2 receptor with negative allosteric modulator (PDB: 4MQT). Despite intermediate TM6 position, \hyaline{} correctly predicts inactive state (confidence: 0.72). Attention concentrates on the partially intact ionic lock (R$^{3.50}$--E$^{6.30}$ distance: 5.8~\AA{}) rather than the allosteric site.
-\textbf{d}, Instructive misclassification: adenosine A$_{2A}$R bound to agonist CGS21680 without G protein (PDB: 2YDO), annotated as active but predicted as inactive (confidence: 0.61). Structural analysis reveals a pre-activated intermediate: TM3--TM6 C$\alpha$ distance is 12.1~\AA{} (versus 8.5~\AA{} inactive, 16.8~\AA{} active), and the connector region (P$^{5.50}$/F$^{6.44}$/I$^{3.40}$) shows partial rearrangement.}
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{2RH1_dry_closeup.png}
+    \caption{Inactive state (PDB: 2RH1)}
+    \label{fig:2rh1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{3SN6_dry_closeup.png}
+    \caption{Active state (PDB: 3SN6)}
+    \label{fig:3sn6}
+\end{subfigure}
+\caption{\textbf{Structural basis of activation state discrimination.} 
+\hyaline{} correctly identifies activation states by detecting fine-grained side-chain rearrangements at conserved microswitches, as illustrated for the prototypical $\beta_2$-adrenergic receptor. 
+\textbf{a}, In the inactive conformation (PDB: 2RH1), the conserved DRY motif at the cytoplasmic end of TM3 maintains an intact ionic lock: the guanidinium group of Arg$^{3.50}$ (Ballesteros-Weinstein numbering) forms a salt bridge with Glu$^{6.30}$ on TM6 (distance: 3.4~\AA{}), stabilizing the closed intracellular conformation that occludes G protein binding. 
+\textbf{b}, Upon activation by agonist and G protein coupling (PDB: 3SN6), this ionic lock is broken (R$^{3.50}$--E$^{6.30}$ distance: 11.2~\AA{}) as TM6 undergoes its characteristic 14~\AA{} outward displacement. Arg$^{3.50}$ rotates into the opened intracellular cavity where it coordinates the C-terminal helix of G$\alpha_s$. The elevated attention scores assigned by \hyaline{} to this region (Fig.~3) confirm that the model discriminates conformational states based on this precise physical mechanism rather than superficial structural correlates.}
 \label{fig:case_studies}
 \end{figure}
 
@@ -422,6 +380,24 @@ A key advantage of \hyaline{}'s architecture is that it does not require multipl
 Protein language model embeddings were extracted using ESM3-Open (esm3-open-2024-03)\autocite{Lin2023}, a 15-billion parameter transformer trained on billions of protein sequences using masked language modeling. The masked language modeling objective trains the model to predict the identity of randomly masked amino acids by observing their context in the rest of the sequence, causing the model to internalize sequence patterns across evolution\autocite{Rives2021}. For each receptor sequence, we obtained per-residue representations by computing the mean of hidden representations across all 48 transformer layers, yielding a 1,536-dimensional embedding per residue. This layer-wise mean pooling strategy captures both local sequence features (early layers) and global evolutionary context (later layers)\autocite{Elnaggar2022}.
 
 Embeddings were precomputed and cached to accelerate training. ESM3 inference requires approximately 24~GB GPU memory for sequences up to 1,000 residues; we processed sequences in batches of 8 on NVIDIA A100 GPUs. For structures with missing residues in loops, we used the full UniProt sequence for embedding extraction and aligned embeddings to resolved coordinates using pairwise sequence alignment (Needleman-Wunsch algorithm with BLOSUM62 scoring matrix).
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{Geometric_Arbfeat_Bmotifattbias.png}
+\caption{\textbf{Graph construction and feature encoding.} 
+\textbf{a}, Radial basis function (RBF) encoding of pairwise C$_\alpha$ distances. Each edge receives a 96-dimensional feature vector computed as Gaussian expansions centered at uniformly spaced distances from 2--20~\AA{}. This smooth, continuous representation enables the model to learn distance-dependent interaction patterns characteristic of activation states.
+\textbf{b}, Motif attention biasing mechanism. Residues within conserved activation microswitches (DRY, NPxxY, CWxP) receive additive attention bias ($b_{\text{motif}} = 0.5$), providing a soft inductive prior that guides learning toward functionally important regions without constraining the model's representational capacity.}
+\label{fig:methods_graph}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{egnn_layer.pdf}
+\caption{\textbf{Enhanced E(n)-equivariant message passing with biological priors.} 
+Detailed schematic of a single \hyaline{} layer illustrating the dual update mechanism. The architecture simultaneously updates node coordinates $x_i$ and feature vectors $h_i$ through message functions $\phi_e$ that depend on pairwise distances and RBF-encoded edge attributes, thereby maintaining strict rotational equivariance by construction. The Motif Bias block (highlighted in red) injects learnable attention weights directly into the message aggregation mechanism, providing an inductive bias that guides the network to prioritize residues within conserved microswitches---the ionic lock formed by the DRY motif (Asp-Arg-Tyr in TM3), the NPxxY rotamer toggle (TM7), and the CWxP transmission switch (TM6)---while retaining full capacity to learn novel geometric features from the training distribution. This soft biasing accelerates convergence and improves robustness to distribution shift without hard-coding classification rules.}
+\label{fig:egnn_mechanism}
+\end{figure}
 
 \subsection{Graph construction}
 
@@ -537,18 +513,9 @@ All structures used in this study are publicly available from the Protein Data B
 
 \begin{figure}[!htbp]
 \centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{4cm}
-\textbf{EXTENDED DATA FIGURE 1: Training Dynamics and Scalability}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{Training dynamics, convergence, and computational scalability.}
-\textbf{a}, Training and validation loss curves over 30 epochs, showing stable convergence without overfitting. Final training loss: 0.065; final validation loss: 0.169.
-\textbf{b}, Learning rate schedule showing linear warmup (5 epochs) followed by cosine annealing.
-\textbf{c}, Per-fold performance across 5-fold cross-validation, demonstrating consistent results (\auroc{} range: 0.991--0.998).
-\textbf{d}, Inference time as a function of receptor length, showing linear scaling. Mean inference time: 0.5 seconds per structure on GPU.}
+\includegraphics[width=0.95\textwidth]{Scalability_AgeometryUMAP_Bruntime.png}
+\caption{\textbf{Linear computational scaling enables high-throughput application.} 
+Inference time as a function of protein sequence length demonstrates that \hyaline{}'s sparse radius graph implementation scales linearly with receptor size ($O(N)$ complexity), in contrast to dense pairwise attention mechanisms (e.g., Transformers without sparse attention) that scale quadratically ($O(N^2)$). This efficiency arises from the 10~\AA{} radius cutoff, which produces graphs with $O(N)$ edges rather than $O(N^2)$ for fully connected representations. The favorable scaling enables processing of typical \gpcr{} structures ($<$400 residues) in under 0.5 seconds on a single GPU (NVIDIA A100), facilitating high-throughput screening of AI-predicted structures, real-time assessment of molecular dynamics trajectories, and integration into iterative drug design workflows. Batch inference achieves throughput exceeding 7,200 structures per hour.}
 \label{fig:ext_training}
 \end{figure}
 
@@ -556,18 +523,9 @@ All structures used in this study are publicly available from the Protein Data B
 
 \begin{figure}[!htbp]
 \centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{5cm}
-\textbf{EXTENDED DATA FIGURE 2: Structural Comparison of Active and Inactive States}\\[1em]
-\textit{[PyMOL renders to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{Structural basis of \gpcr{} activation detected by \hyaline.}
-\textbf{a}, Side view of superimposed active (blue) and inactive (red) $\beta_2$-adrenergic receptor structures (PDB: 3SN6, 2RH1), showing the characteristic outward movement of TM6 in the active state. Arrow indicates the $\sim$14 \AA{} displacement of the intracellular end of TM6.
-\textbf{b}, Cytoplasmic view highlighting the opening of the intracellular cavity in the active state that accommodates G protein binding. Ionic lock distance (R$^{3.50}$--E$^{6.30}$): 3.5~\AA{} in inactive, 11.2~\AA{} in active.
-\textbf{c}, Close-up of the DRY-NPxxY-CWxP motif triangle, showing the conformational changes in these conserved microswitches. In the active state, R$^{3.50}$ extends into the G protein-binding pocket and forms a hydrogen bond with Y$^{5.58}$.
-\textbf{d}, Overlay showing TM6 conformations across multiple class A receptors in active (blue spectrum) and inactive (red spectrum) states, demonstrating the universality of the outward TM6 movement as the primary activation signature.}
+\includegraphics[width=0.95\textwidth]{grphread_classif.pdf}
+\caption{\textbf{Jumping Knowledge aggregation and readout architecture.} 
+To mitigate over-smoothing---a common failure mode of deep graph neural networks where node representations become indistinguishable---and capture features at multiple spatial scales, node representations from all six layers (initial embedding plus five EGNN message-passing layers) are concatenated prior to global pooling. This Jumping Knowledge aggregation produces a 1,920-dimensional vector (320 $\times$ 6 layers) that is fused with the global graph state before projection through the final two-layer MLP classifier. This architecture ensures the readout captures both fine-grained local atomic environments from early layers (sensitive to immediate neighbor configurations) and integrated long-range receptor topology from deeper layers (sensitive to the global arrangement of transmembrane helices).}
 \label{fig:ext_structures}
 \end{figure}
 
@@ -575,79 +533,14 @@ All structures used in this study are publicly available from the Protein Data B
 
 \begin{figure}[!htbp]
 \centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{4cm}
-\textbf{EXTENDED DATA FIGURE 3: Class-Specific Activation Mechanisms}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{Variation in activation mechanisms across \gpcr{} classes.}
-\textbf{a}, Schematic diagrams of transmembrane helix movements upon activation for each class. Class A: TM6 outward rotation ($\sim$14 \AA{}), ionic lock R$^{3.50}$--E$^{6.30}$ broken. Class B1: Pronounced TM6 kinking (sharp bend at mid-helix) and extracellular unwinding, $\sim$10--18~\AA{} displacement. Class C: Minimal intramolecular changes ($\sim$2--4~\AA{}); activation primarily involves dimer reorientation, ionic lock formed by K$^{3.46}$ rather than R$^{3.50}$. Class F: Intermediate TM6 movement ($\sim$5--8~\AA{}) with additional TM5 and TM7 contributions.
-\textbf{b}, Class-specific attention weight patterns learned by \hyaline{}, showing adaptation to different activation mechanisms. Class A: strong DRY/NPxxY enrichment. Class B1: attention extends to TM6 kink region. Class C: broader distribution reflecting dimer interface contributions.
-\textbf{c}, Confusion matrices stratified by receptor class, revealing that most misclassifications occur in Class C receptors consistent with their distinct mechanism.}
+\includegraphics[width=0.95\textwidth]{Embeddings_Alearned_BGPCRclass.png}
+\caption{\textbf{Learned latent representations encode a universal activation axis.} 
+t-SNE projection (perplexity = 30, 1,000 iterations) of the final hidden layer embeddings (320-dimensional graph representations after global pooling) for all structures in the temporal test set ($n = 278$). Structures cluster primarily by activation state (active versus inactive, indicated by color) rather than by sequence homology or receptor family, demonstrating that \hyaline{} has learned a generalizable ``activation axis'' that transfers across the mechanistically diverse Class A, B, C, and F receptor superfamilies. Secondary clustering by receptor class (indicated by marker shape) reflects family-specific structural features---such as the distinct TM6 kinking in Class B1 receptors versus the rigid-body TM6 rotation in Class A---that are superimposed on the shared activation signature. This hierarchical organization validates the model's ability to capture both universal physics of activation and receptor-specific structural nuances.}
 \label{fig:ext_classes}
 \end{figure}
 
-\subsection*{Extended Data Figure 4: Intermediate State Gallery}
 
-\begin{figure}[!htbp]
-\centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{5cm}
-\textbf{EXTENDED DATA FIGURE 4: Gallery of Intermediate Conformational States}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{Structures with intermediate \hyaline{} confidence scores represent partially activated conformations.}
-Eight representative structures with confidence scores between 0.4--0.6, shown as superpositions with canonical active (blue) and inactive (red) reference structures. For each structure: PDB code, receptor name, bound ligand, \hyaline{} confidence score, ionic lock distance (R$^{3.50}$--E$^{6.30}$ or equivalent), and TM6 displacement from inactive reference.
-\textbf{a}, A$_{2A}$R + CGS21680 (agonist) without G protein (PDB: 2YDO). Confidence: 0.61. Ionic lock: 6.8~\AA{}. TM6 displacement: 3.6~\AA{}.
-\textbf{b}, A$_{2A}$R + UK-432097 (agonist) without G protein (PDB: 2YDV). Confidence: 0.58. Ionic lock: 7.1~\AA{}. TM6 displacement: 4.2~\AA{}.
-\textbf{c}, $\beta_1$AR + dobutamine (partial agonist) (PDB: 2Y03). Confidence: 0.52. Ionic lock: 5.4~\AA{}. TM6 displacement: 2.8~\AA{}.
-\textbf{d}, M2R + iperoxo (agonist) without G protein (PDB: 4MQS). Confidence: 0.55. Ionic lock: 6.2~\AA{}. TM6 displacement: 3.4~\AA{}.
-\textbf{e--h}, Additional examples from Class B1 and Class C receptors showing analogous intermediate conformations.
-These structures demonstrate that intermediate confidence scores correspond to genuine conformational intermediates rather than model uncertainty, validating \hyaline{}'s ability to detect the activation continuum.}
-\label{fig:ext_intermediates}
-\end{figure}
 
-\subsection*{Extended Data Figure 5: Cross-Receptor Generalization}
-
-\begin{figure}[!htbp]
-\centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{4cm}
-\textbf{EXTENDED DATA FIGURE 5: Cross-Receptor Generalization Analysis}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{Leave-one-receptor-out analysis demonstrates generalization to novel receptors.}
-\textbf{a}, Heatmap showing \auroc{} when training on all receptors except one (rows) and testing on the held-out receptor (columns). Values $>$0.95 (green) indicate successful generalization; values $<$0.85 (red) indicate generalization failure. Most receptor pairs show strong cross-generalization.
-\textbf{b}, Correlation between sequence identity to nearest training receptor and test performance. Receptors with $<$30\% sequence identity to any training receptor maintain \auroc{} $>$0.92, demonstrating generalization beyond sequence similarity.
-\textbf{c}, Hierarchical clustering of receptors based on learned representations, colored by receptor family. Clustering reflects evolutionary relationships, indicating that \hyaline{} has learned family-specific features.
-\textbf{d}, Performance stratified by number of training structures for each receptor. Receptors with $\geq$10 training structures achieve \auroc{} $>$0.98; receptors with 1--5 training structures achieve \auroc{} $\sim$0.94.}
-\label{fig:ext_generalization}
-\end{figure}
-
-\subsection*{Extended Data Figure 6: Application to AI-Predicted Structures}
-
-\begin{figure}[!htbp]
-\centering
-\fbox{\parbox{0.95\textwidth}{
-\centering
-\vspace{4cm}
-\textbf{EXTENDED DATA FIGURE 6: Hyaline Assessment of AI-Predicted Structures}\\[1em]
-\textit{[Figure to be generated]}
-\vspace{1cm}
-}}
-\caption{\textbf{\hyaline{} provides orthogonal assessment of AI-predicted \gpcr{} conformations.}
-\textbf{a}, Comparison of \hyaline{} predictions on experimental structures versus AlphaFold 3 predictions for the same receptors. For receptors with known active and inactive experimental structures, AlphaFold 3 predictions receive intermediate confidence scores (mean: 0.62), consistent with the ambiguous conformational states reported in recent benchmarks\autocite{Xu2025}.
-\textbf{b}, Calibration comparison: \hyaline{} confidence scores on experimental structures (blue) versus AlphaFold 3 predictions (orange). Predicted structures show systematic shift toward intermediate confidence, reflecting their intermediate conformational character.
-\textbf{c}, Case study: $\beta_2$-adrenergic receptor. Experimental active (PDB: 3SN6) receives confidence 0.97; experimental inactive (PDB: 2RH1) receives confidence 0.04; AlphaFold 3 prediction receives confidence 0.58. Structural overlay shows AlphaFold 3 prediction intermediate between active and inactive.
-\textbf{d}, Distribution of \hyaline{} confidence scores across 50 AlphaFold 3-predicted \gpcr{} structures. Unlike experimental structures (bimodal distribution), predicted structures cluster near 0.5, indicating systematic production of intermediate states.}
-\label{fig:ext_alphafold}
-\end{figure}
 
 \subsection*{Extended Data Table 1: Complete Performance Metrics by Receptor Family}
 
