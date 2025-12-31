@@ -12,17 +12,18 @@
 %   - Nature Communications-level caption
 %   - Correct label matching existing references
 %
-% Required figure files (place in same directory as .tex or figures/):
+% Required figure files (place in same directory as .tex):
 %   - global_diagram.pdf
-%   - benchmark_comparison.pdf  (or create from benchmark bar chart)
+%   - Benchmark_Acomp_Bresindep.png
 %   - egnn_layer.pdf
-%   - motif_attention_analysis.pdf (or create from motif attention bar chart)
-%   - ablation_analysis.pdf (or create from ablation bar chart)
-%   - 2RH1_dry.png
-%   - 3SN6_dry.png
+%   - MotifAttention_Amean_Bdistrib.png
+%   - Architecture_Ablation.png
+%   - 2RH1_dry_closeup.png
+%   - 3SN6_dry_closeup.png
 %   - grphread_classif.pdf
-%   - scalability_analysis.pdf (or create from scalability line plot)
-%   - latent_space_tsne.pdf (or create from t-SNE plot)
+%   - Scalability_AgeometryUMAP_Bruntime.png
+%   - Embeddings_Alearned_BGPCRclass.png
+%   - Geometric_Arbfeat_Bmotifattbias.png (optional, for Methods)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -49,12 +50,12 @@ The architecture integrates evolutionary sequence information with three-dimensi
 
 %-----------------------------------------------------------------------
 % FIGURE 2: Temporal Generalization Benchmark
-% Asset: benchmark_comparison.pdf (bar chart comparing Hyaline vs baselines)
+% Asset: Benchmark_Acomp_Bresindep.png
 % Placement: Section 2.2 - "Hyaline generalizes to temporally distinct structures"
 %-----------------------------------------------------------------------
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{benchmark_comparison.pdf}
+\includegraphics[width=0.95\textwidth]{Benchmark_Acomp_Bresindep.png}
 \caption{\textbf{Hyaline generalizes to temporally distinct structures.} 
 Performance evaluation on a held-out test set comprising structures deposited in 2023--2024, strictly separated from the pre-2023 training corpus. \hyaline{} (purple) achieves an \auroc{} of 0.991, significantly outperforming sequence-only baselines including ESM3 embeddings with linear classifier (\auroc{} = 0.852), ESM3 with MLP (\auroc{} = 0.867), and random forest models trained on hand-crafted inter-residue distance features (\auroc{} = 0.891). The 13.9 percentage point performance gap relative to the ESM3-only baseline demonstrates the critical contribution of geometric message passing in resolving conformational states that remain indistinguishable by amino acid sequence information alone. Error bars denote 95\% confidence intervals computed via bootstrap resampling ($n = 1{,}000$).}
 \label{fig:performance}
@@ -77,12 +78,12 @@ Detailed schematic of a single \hyaline{} layer illustrating the dual update mec
 
 %-----------------------------------------------------------------------
 % FIGURE 4: Interpretability & Motif Analysis
-% Asset: motif_attention_analysis.pdf (bar chart of DRY/NPxxY/CWxP weights)
+% Asset: MotifAttention_Amean_Bdistrib.png
 % Placement: Section 2.3 - Following Figure 3
 %-----------------------------------------------------------------------
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{motif_attention_analysis.pdf}
+\includegraphics[width=0.95\textwidth]{MotifAttention_Amean_Bdistrib.png}
 \caption{\textbf{Autonomous recovery of conserved activation switches.} 
 Quantitative analysis of learned attention weights across correctly classified structures in the temporal test set reveals that \hyaline{} spontaneously prioritizes functionally critical regions without explicit supervision. The model assigns significantly elevated importance to the three conserved activation motifs---DRY (3.2$\times$ enrichment relative to non-motif residues), NPxxY (2.8$\times$), and CWxP (2.4$\times$)---compared to variable regions such as the PIF motif ($p < 0.001$, permutation test with $n = 10{,}000$ resamples). Additional attention peaks at the intracellular end of TM5 (2.1$\times$) and helix 8 (1.9$\times$) correspond to established G protein-binding elements, further validating that the network has learned the underlying biophysics of receptor activation rather than superficial structural correlates or dataset-specific artifacts.}
 \label{fig:interpretability}
@@ -91,12 +92,12 @@ Quantitative analysis of learned attention weights across correctly classified s
 
 %-----------------------------------------------------------------------
 % FIGURE 5: Ablation Studies
-% Asset: ablation_analysis.pdf (bar chart showing component contributions)
+% Asset: Architecture_Ablation.png
 % Placement: Section 2.5 - "Ablation studies..."
 %-----------------------------------------------------------------------
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{ablation_analysis.pdf}
+\includegraphics[width=0.95\textwidth]{Architecture_Ablation.png}
 \caption{\textbf{Deconstructing the value of geometric priors.} 
 Systematic ablation studies quantify the independent contribution of each architectural component to classification performance. Removal of the geometric structure encoding (No RBF/GNN) produces the steepest performance decline ($\Delta$\auroc{} = $-$17.2\%), confirming that three-dimensional geometry constitutes the primary driver of accurate state discrimination---sequence-derived features alone, despite their richness, cannot resolve the conformational differences between active and inactive states. Ablating the motif-biased attention mechanism results in a more modest but statistically significant decrease ($\Delta$\auroc{} = $-$2.7\%, $p < 0.01$), validating the utility of domain-specific inductive biases in accelerating learning and improving generalization. The RBF distance encoding ($\Delta$\auroc{} = $-$2.4\%) and message-passing depth ($\Delta$\auroc{} = $-$1.4\% for 3 vs.\ 5 layers) each contribute incrementally, demonstrating that all components synergize to achieve optimal performance. All ablations evaluated via 5-fold cross-validation with cluster-based splitting at 30\% sequence identity.}
 \label{fig:ablation}
@@ -105,21 +106,21 @@ Systematic ablation studies quantify the independent contribution of each archit
 
 %-----------------------------------------------------------------------
 % FIGURE 6: Structural Validation (The "Proof")
-% Assets: 2RH1_dry.png and 3SN6_dry.png (side-by-side)
+% Assets: 2RH1_dry_closeup.png and 3SN6_dry_closeup.png (side-by-side)
 % Placement: End of Results / Section 2.6
 %-----------------------------------------------------------------------
 \begin{figure}[!htbp]
 \centering
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{2RH1_dry.png}
+    \includegraphics[width=\textwidth]{2RH1_dry_closeup.png}
     \caption{Inactive state (PDB: 2RH1)}
     \label{fig:2rh1}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{3SN6_dry.png}
+    \includegraphics[width=\textwidth]{3SN6_dry_closeup.png}
     \caption{Active state (PDB: 3SN6)}
     \label{fig:3sn6}
 \end{subfigure}
@@ -151,12 +152,12 @@ To mitigate over-smoothing---a common failure mode of deep graph neural networks
 
 %-----------------------------------------------------------------------
 % EXTENDED DATA FIGURE 2: Computational Scalability
-% Asset: scalability_analysis.pdf (line plot of inference time vs length)
+% Asset: Scalability_AgeometryUMAP_Bruntime.png
 % Placement: Appendix/Extended Data
 %-----------------------------------------------------------------------
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{scalability_analysis.pdf}
+\includegraphics[width=0.95\textwidth]{Scalability_AgeometryUMAP_Bruntime.png}
 \caption{\textbf{Linear computational scaling enables high-throughput application.} 
 Inference time as a function of protein sequence length demonstrates that \hyaline{}'s sparse radius graph implementation scales linearly with receptor size ($O(N)$ complexity), in contrast to dense pairwise attention mechanisms (e.g., Transformers without sparse attention) that scale quadratically ($O(N^2)$). This efficiency arises from the 10~\AA{} radius cutoff, which produces graphs with $O(N)$ edges rather than $O(N^2)$ for fully connected representations. The favorable scaling enables processing of typical \gpcr{} structures ($<$400 residues) in under 0.5 seconds on a single GPU (NVIDIA A100), facilitating high-throughput screening of AI-predicted structures, real-time assessment of molecular dynamics trajectories, and integration into iterative drug design workflows. Batch inference achieves throughput exceeding 7,200 structures per hour.}
 \label{fig:ext_scalability}
@@ -165,16 +166,33 @@ Inference time as a function of protein sequence length demonstrates that \hyali
 
 %-----------------------------------------------------------------------
 % EXTENDED DATA FIGURE 3: Latent Space Analysis
-% Asset: latent_space_tsne.pdf (t-SNE projection)
+% Asset: Embeddings_Alearned_BGPCRclass.png
 % Placement: Appendix/Extended Data
 %-----------------------------------------------------------------------
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{latent_space_tsne.pdf}
+\includegraphics[width=0.95\textwidth]{Embeddings_Alearned_BGPCRclass.png}
 \caption{\textbf{Learned latent representations encode a universal activation axis.} 
 t-SNE projection (perplexity = 30, 1,000 iterations) of the final hidden layer embeddings (320-dimensional graph representations after global pooling) for all structures in the temporal test set ($n = 278$). Structures cluster primarily by activation state (active versus inactive, indicated by color) rather than by sequence homology or receptor family, demonstrating that \hyaline{} has learned a generalizable ``activation axis'' that transfers across the mechanistically diverse Class A, B, C, and F receptor superfamilies. Secondary clustering by receptor class (indicated by marker shape) reflects family-specific structural features---such as the distinct TM6 kinking in Class B1 receptors versus the rigid-body TM6 rotation in Class A---that are superimposed on the shared activation signature. This hierarchical organization validates the model's ability to capture both universal physics of activation and receptor-specific structural nuances.}
 \label{fig:ext_latent}
 \end{figure}
+
+
+%=======================================================================
+% OPTIONAL: Methods Figure for Graph Construction
+% Asset: Geometric_Arbfeat_Bmotifattbias.png
+% Placement: Methods section or Supplementary
+%=======================================================================
+% Uncomment below if you want to include in Methods:
+%
+% \begin{figure}[!htbp]
+% \centering
+% \includegraphics[width=0.95\textwidth]{Geometric_Arbfeat_Bmotifattbias.png}
+% \caption{\textbf{Graph construction and feature encoding.} 
+% \textbf{a}, Radial basis function (RBF) encoding of pairwise C$_\alpha$ distances. Each edge receives a 96-dimensional feature vector computed as Gaussian expansions centered at uniformly spaced distances from 2--20~\AA{}. This smooth, continuous representation enables the model to learn distance-dependent interaction patterns characteristic of activation states.
+% \textbf{b}, Motif attention biasing mechanism. Residues within conserved activation microswitches (DRY, NPxxY, CWxP) receive additive attention bias ($b_{\text{motif}} = 0.5$), providing a soft inductive prior that guides learning toward functionally important regions without constraining the model's representational capacity.}
+% \label{fig:methods_graph}
+% \end{figure}
 
 
 %=======================================================================
