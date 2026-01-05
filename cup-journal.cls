@@ -1479,24 +1479,24 @@
   \patchcmd{\thfiller}{structure@color}{black}{}{}
 }
 \def\cup@jnl@jog{
-  % v1.01: AOG and JOG do NOT want the journal name visible
-  \def\cup@journal@name{}
-  \cup@layout@large
-  \patch@numeric@authors
-  \patchcmd{\@maketitle}
-    {\includegraphics[width=\linewidth]{cup-logo-new}}
-    {\journalnamefont\upshape\normalsize\bfseries cambridge.org}
-    {}{}
-  \patchcmd{\@maketitle}
-    {\textbf{www.cambridge.org}}
-    {\includegraphics[width=\linewidth]{cup-logo-new}}
-    {}{}
-  \renewcommand{\email}[2][]{%
-    \cup@emailtrue%
-    \def\cup@contact@details{%
-      {\emailfont\textbf{Author for correspondence:}\\##1,\\E-mail: ##2}%
-    }%
-  }
+  % % v1.01: AOG and JOG do NOT want the journal name visible
+  % \def\cup@journal@name{}
+  % \cup@layout@large
+  % \patch@numeric@authors
+  % \patchcmd{\@maketitle}
+  %   {\includegraphics[width=\linewidth]{cup-logo-new}}
+  %   {\journalnamefont\upshape\normalsize\bfseries cambridge.org}
+  %   {}{}
+  % \patchcmd{\@maketitle}
+  %   {\textbf{www.cambridge.org}}
+  %   {\includegraphics[width=\linewidth]{cup-logo-new}}
+  %   {}{}
+  % \renewcommand{\email}[2][]{%
+  %   \cup@emailtrue%
+  %   \def\cup@contact@details{%
+  %     {\emailfont\textbf{Author for correspondence:}\\##1,\\E-mail: ##2}%
+  %   }%
+  %}
   \renewmdenv[hidealllines=true,leftmargin=\z@,rightmargin=\z@,innerleftmargin=\z@,innerrightmargin=\z@,innertopmargin=\z@,innerbottommargin=\z@,frametitle={\abstractfont\sffamily Abstract},frametitleaboveskip=2mm,frametitlebelowskip=2mm]{cup@abstract@box}
   \setcounter{secnumdepth}{3}
   \renewcommand*\cup@etal{et al.}
