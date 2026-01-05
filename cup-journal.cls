@@ -1416,13 +1416,13 @@
   \cup@layout@medium
 }%
 \def\cup@jnl@large{%
-  \def\cup@journal@name{Cambridge Large One}
+  \def\cup@journal@name{ }
   \cup@layout@large
   \patch@numeric@authors
 }
 % v1.3: numbered sectional headings for largetwo journals
 \def\cup@jnl@largetwo{
-  \def\cup@journal@name{Cambridge Large Two}
+  \def\cup@journal@name{ }
   \cup@layout@largetwo
   % \setcounter{secnumdepth}{0} 
   \patchcmd{\@maketitle}
@@ -1461,7 +1461,7 @@
   }
   \renewmdenv[hidealllines=true,leftmargin=\z@,rightmargin=\z@,innerleftmargin=\z@,innerrightmargin=\z@,innertopmargin=\z@,innerbottommargin=\z@,frametitle={\abstractfont\sffamily Abstract},frametitleaboveskip=2mm,frametitlebelowskip=2mm]{cup@abstract@box}
   \setcounter{secnumdepth}{3}
-  \renewcommand*\cup@etal{et al.}
+  \renewcommand*\cup@etal{, H. Kabodha}
   \providecommand{\cup@reference@code}{%
     \RequirePackage{natbib}
     \bibliographystyle{igs}
